@@ -1,3 +1,8 @@
+"""Solution to Day 1 https://adventofcode.com/2022/day/1"""
+
+# Author: Andrea Maldonado andreamalher.works@gmail.com
+# License: MIT License
+
 from itertools import groupby
 
 INPUT_PATH = "input/1.txt"

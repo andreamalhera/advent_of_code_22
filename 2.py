@@ -1,3 +1,8 @@
+"""Solution to Day 2 https://adventofcode.com/2022/day/2"""
+
+# Author: Andrea Maldonado andreamalher.works@gmail.com
+# License: MIT License
+
 import pandas as pd
 
 def get_shape_points(first, mode, second = None):
