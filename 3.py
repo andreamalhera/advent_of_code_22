@@ -16,9 +16,12 @@ def advent_3_1(df):
     print("1*: The sum of priorities of those items is", sum(df["prio"]), ".")
 
 def advent_3_2(df):
+    badges = []
     rucksacks = df["rucksack"]
-    for x in rucksacks[::3]:
-
+    for i in range(1,int(len(rucksacks)/3)+1):
+        group = rucksacks[3*(i-1):i*3].tolist()
+        badges.append(letters.index(set(group[0]).intersection(set(group[1]),set(group[2])).pop())+1)
+    print("2*: The sum of priorities of the badges is", sum(badges), ".")
 
 def test_3_1():
     rucksacks = ["vJrwpWtwJgWrhcsFMMfFFhFp","jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL","PmmdzqPrVvPwwTWBwg",
@@ -32,6 +35,7 @@ if __name__ == '__main__':
     test_3_1()
 
     INPUT_PATH = "input/3.txt"
-    print("Running using ", INPUT_PATH)
+    print("Running using", INPUT_PATH)
     df = pd.read_csv(INPUT_PATH, sep=' ', header=None, names=['rucksack'])
     advent_3_1(df)
+    advent_3_2(df)
