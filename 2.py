@@ -94,10 +94,10 @@ def test_2_1():
     df_test = pd.DataFrame(list(zip(opponent, you)), columns=["opp", "you"])
     advent_2_1(df_test)# Should outcome 15.
 
-def test2_2():
+def test_2_2():
     opponent = ["A","B","C"]
     outcome = ["Y", "X", "Z"]# X:Lose; Y:Draw; Z:Win
-    df_test = pd.DataFrame(list(zip(opponent, you)), columns=["opp", "outcome"])
+    df_test = pd.DataFrame(list(zip(opponent, outcome)), columns=["opp", "outcome"])
     advent_2_2(df_test)# Should outcome 12.
 
 if __name__ == '__main__':
@@ -105,8 +105,8 @@ if __name__ == '__main__':
     test_2_1()
     test_2_2()
 
-    print("Running using ", INPUT_PATH)
     INPUT_PATH = "input/2.txt"
+    print("Running using ", INPUT_PATH)
     df = pd.read_csv(INPUT_PATH, sep=' ', header=None, names=['opp','you'])
     advent_2_1(df)
     df = pd.read_csv(INPUT_PATH, sep=' ', header=None, names=['opp','outcome'])
