@@ -1,4 +1,4 @@
-"""Solution to Day 3 https://adventofcode.com/2022/day/4"""
+"""Solution to Day 4 https://adventofcode.com/2022/day/4"""
 
 # Author: Andrea Maldonado andreamalher.works@gmail.com
 # License: MIT License
