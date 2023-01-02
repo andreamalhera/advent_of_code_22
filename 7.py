@@ -10,7 +10,7 @@ from treelib import Node, Tree
 
 
 def compute_dir_sizes(tree):
-    nodes = [node.tag for node in tree.all_nodes()]
+    nodes = [node.identifier for node in tree.all_nodes()]
     df = pd.DataFrame(nodes, columns=['node'])
     df['ancestor']=df.apply(lambda x: tree.ancestor(x['node']), axis=1)
     df['level']=df.apply(lambda x: tree.level(x['node']), axis=1)
@@ -38,31 +38,41 @@ def compute_dir_sizes(tree):
 def compute_result(df):
     THRESHOLD = 100000
     directories = df['ancestor'].unique()
-    print(directories)
     result_df = df[(df['size']<=THRESHOLD) & (df['node'].isin(directories))]
     print('RESULT: ', result_df['size'].sum())
 
 def create_tree(lines):
     parent = " "
+    filepath = []
     filesystem = Tree()
     parent_size = 0
     filesystem.create_node("/", "/")
     for line in lines:
         if line.startswith("$"):
             if line.startswith("$ cd"):
-                parent = re.findall(r'\w+', line)[-1]
-                parent = line.split()[-1]
-                parent_size= 0
+                if line.startswith("$ cd /"):
+                    #parent="/"
+                    filepath=["/"]
+                elif line.startswith("$ cd .."):
+                    filepath.pop()
+                else:
+                    parent = re.findall(r'\w+', line)[-1]
+                    parent = line.split()[-1]
+                    filepath.append(parent)
+                    parent_size= 0
             continue
         elif line.startswith("dir"):
             dire = line.split()[-1]
             if filesystem.get_node(dire) is None:
-                filesystem.create_node(dire, dire, parent=parent)
+                path_to_dire = "/".join(filepath)+"/"+dire
+                filesystem.create_node(dire, path_to_dire, parent="/".join(filepath))
         else:
             size, file = line.split()
             file = file+" (size="+size+")"
             parent_size += int(size)
-            filesystem.create_node(file, file, parent=parent)
+            new_parent_name = parent.split(' (size')[0]+" (size="+str(parent_size)+")"
+            path_to_file= "/".join(filepath)+"/"+file
+            filesystem.create_node(file, path_to_file, parent="/".join(filepath))
     filesystem.show()
     return filesystem
 
